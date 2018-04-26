@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "yyalloc.h"
-
+#include "YY_alloc.h"
 using namespace std;
 
 int main() {
