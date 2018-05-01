@@ -200,7 +200,7 @@ namespace YY {
             start_free += total_bytes;
             return result;
         } else {
-            // 内存池一个区块都无法提供 向堆要需求量的两倍空间
+            // 内存池一个区块都无法提供 向堆要需求量的两倍空间 + 一个随着配置次数越来越大的附加量
             size_t bytes_to_get =  2 * total_bytes + ROUND_UP(heap_size >> 4);
             // 榨干剩余价值 就将他放入free list
             if (bytes_left > 0) {

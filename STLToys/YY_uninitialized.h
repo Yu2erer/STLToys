@@ -10,6 +10,7 @@
 #define STLTOYS_YY_UNINITIALIZED_H
 
 #include "YY_construct.h"
+#include <string>
 
 namespace YY {
 
@@ -31,7 +32,7 @@ namespace YY {
         return cur;
     };
 
-    // POD = Plain old data 标量型别 必然拥有trival ctor/dtor/copy/assignment函数 对POD型别做更有效率的初值填写手法 而 non-POD 型别用保险安全的做法
+    // POD = Plain old data 标量型别 必然拥有trivial ctor/dtor/copy/assignment函数 对POD型别做更有效率的初值填写手法 而 non-POD 型别用保险安全的做法
     template <typename ForwardIterator, typename Size, typename T, typename T1>
     inline ForwardIterator __uninitialized_fill_n(ForwardIterator first, Size n, const T& x, T1*) {
         typedef typename __type_traits<T1>::is_POD_type is_POD;
@@ -70,6 +71,15 @@ namespace YY {
     template <typename InputIterator, typename ForwardIterator>
     inline ForwardIterator uninitilalized_copy(InputIterator first, InputIterator last, ForwardIterator result) {
         return __uninitialized_copy(first, last, result, value_type(result));
+    }
+    // 针对 char* 和 wchar_t* 采用更有效率的 memmove进行复制
+    inline char* uninitialized_copy(const char *first, const char *last, char *result) {
+        memmove(result, first, last - first);
+        return result + (last - first);
+    }
+    inline wchar_t* uninitialized_copy(const wchar_t *first, const wchar_t *last, wchar_t *result) {
+        memmove(result, first, sizeof(wchar_t) * (last - first));
+        return result + (last - first);
     }
 
     template <typename ForwardIterator, typename T, typename T1>
