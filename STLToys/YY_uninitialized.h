@@ -9,8 +9,10 @@
 #ifndef STLTOYS_YY_UNINITIALIZED_H
 #define STLTOYS_YY_UNINITIALIZED_H
 
-#include "YY_construct.h"
 #include <string>
+#include "YY_construct.h"
+#include "YY_iterator.h"
+#include "YY_type_traits.h"
 
 namespace YY {
 
@@ -41,7 +43,7 @@ namespace YY {
 
     template <typename ForwardIterator, typename Size, typename T>
     inline ForwardIterator uninitialized_fill_n(ForwardIterator first, Size n, const T& x) {
-        return __uninitialized_fill_n(first, n, x, value_type(x));
+        return __uninitialized_fill_n(first, n, x, value_type(first));
     }
 
     template <typename InputIterator, typename ForwardIterator>
@@ -100,13 +102,13 @@ namespace YY {
 
     template <typename ForwardIterator, typename T, typename T1>
     inline void __uninitialized_fill(ForwardIterator first, ForwardIterator last, const T& x, T1*) {
-        typedef typename __type_tratis<T1>::is_POD_type is_POD;
+        typedef typename __type_traits<T1>::is_POD_type is_POD;
         __uninitialized_fill_aux(first, last, x, is_POD());
     }
 
     template <typename ForwardIterator, typename T>
     inline void uninitialized_fill(ForwardIterator first, ForwardIterator last, const T& x) {
-        __uninitialized_fill(first, last, x);
+        __uninitialized_fill(first, last, x, value_type(first));
     }
 }
 #endif //STLTOYS_YY_UNINITIALIZED_H
