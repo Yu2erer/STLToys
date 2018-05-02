@@ -19,6 +19,7 @@ namespace YY {
     struct bidirectional_iterator_tag : public forward_iterator_tag { };
     struct random_access_iterator_tag : public bidirectional_iterator_tag { };
 
+    // 迭代器最好继承这个 避免忘记
     template <typename Category, typename T,
             typename Distance = ptrdiff_t,
             typename Pointer = T*, typename Reference = T& >
@@ -39,6 +40,7 @@ namespace YY {
         typedef typename Iterator::reference            reference;
     };
 
+    // 对原生指针的 偏特化
     template <typename T>
     struct iterator_traits<T*> {
         typedef random_access_iterator_tag iterator_category;
