@@ -1,9 +1,10 @@
 # STLToys
 STLToys 是练习时实现的一个C++ STL标准库的玩具.
 
-### 以下是学习 SGI STL 的个人笔记
-[allocator 空间配置器][1]
-[迭代器(Iterator)与Traits编程技巧][2]
+### 以下是学习 SGI STL 的笔记
+
+1. [allocator 空间配置器][1]
+2. [迭代器(Iterator)与Traits技巧][2]
 
 
 

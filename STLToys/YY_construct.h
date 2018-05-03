@@ -25,12 +25,6 @@ namespace YY {
         p->~T();
     }
 
-    // 接受两个迭代器 设法找出元素的类型型别 进而利用 __type_traits<> 找最佳方案
-    template <typename ForwardIterator>
-    inline void destroy(ForwardIterator first, ForwardIterator last) {
-        __destroy(first, last, value_type(first));
-    }
-
     // 判断 元素 value_type 类型型别 是否有 trivial destructor
     template <typename ForwardIterator, typename T>
     inline void __destroy(ForwardIterator first, ForwardIterator last, T*) {
@@ -49,6 +43,12 @@ namespace YY {
     // 元素型别 有 trivial destructor
     template <typename ForwardIterator>
     inline void __destroy_aux(ForwardIterator first, ForwardIterator last, __true_type) {}
+
+    // 接受两个迭代器 设法找出元素的类型型别 进而利用 __type_traits<> 找最佳方案
+    template <typename ForwardIterator>
+    inline void destroy(ForwardIterator first, ForwardIterator last) {
+        __destroy(first, last, value_type(first));
+    }
 
     inline void destroy(char*, char*) {}
     inline void destroy(wchar_t*, wchar_t*) {}

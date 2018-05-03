@@ -237,6 +237,9 @@ namespace YY {
         }
     }
 
+    // 将第二级配置器设置为默认配置器
+    typedef __default_alloc_template<0, 0> alloc;
+
     template <typename T, typename Alloc>
     class simple_alloc {
     public:

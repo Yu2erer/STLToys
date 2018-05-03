@@ -71,7 +71,7 @@ namespace YY {
     }
 
     template <typename InputIterator, typename ForwardIterator>
-    inline ForwardIterator uninitilalized_copy(InputIterator first, InputIterator last, ForwardIterator result) {
+    inline ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator result) {
         return __uninitialized_copy(first, last, result, value_type(result));
     }
     // 针对 char* 和 wchar_t* 采用更有效率的 memmove进行复制

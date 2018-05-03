@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
+
 #include "yyalloc.h"
-#include "YY_alloc.h"
+//#include "YY_alloc.h"
+#include "YY_vector.h"
 using namespace std;
 
 int main() {
@@ -11,6 +13,8 @@ int main() {
     for (i = 0; i < iv.size(); ++i) {
         cout << iv[i] << " ";
     }
-    cout << endl;
+    YY::vector<int> ii;
+    cout << ii.size();
+//    cout << endl;
     return 0;
 }
