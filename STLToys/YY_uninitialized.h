@@ -49,11 +49,7 @@ namespace YY {
     template <typename InputIterator, typename ForwardIterator>
     inline ForwardIterator __uninitialized_copy_aux(InputIterator first, InputIterator last, ForwardIterator result, __true_type) {
         // FIXME: 应该使用 copy()
-        ForwardIterator cur = result;
-        for (; first != last; ++first, ++cur) {
-            construct(&*cur, *first);
-        }
-        return cur;
+        return std::copy(first, last, result);
     }
 
     template <typename InputIterator, typename ForwardIterator>
@@ -64,16 +60,17 @@ namespace YY {
         }
         return cur;
     }
-    template <typename InputIterator, typename ForwardIterator, typename T, typename T1>
+    template <typename InputIterator, typename ForwardIterator, typename T>
     inline ForwardIterator __uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator result, T*) {
-        typedef typename __type_traits<T1>::is_POD_type is_POD;
-        return __uninitialized_copy_aux(first, last, is_POD());
+        typedef typename __type_traits<T>::is_POD_type is_POD;
+        return __uninitialized_copy_aux(first, last, result, is_POD());
     }
 
     template <typename InputIterator, typename ForwardIterator>
     inline ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator result) {
         return __uninitialized_copy(first, last, result, value_type(result));
     }
+
     // 针对 char* 和 wchar_t* 采用更有效率的 memmove进行复制
     inline char* uninitialized_copy(const char *first, const char *last, char *result) {
         memmove(result, first, last - first);

@@ -107,12 +107,11 @@ namespace YY {
             if (new_size < size()) {
                 erase(begin() + new_size, end());
             } else {
-//                insert
+                insert(end(), new_size - size(), x);
             }
         }
         void resize(size_type new_size) { resize(new_size, T()); }
         void clear() { erase(begin(), end()); }
-
     };
 
     template <typename T, typename Alloc>
@@ -141,7 +140,7 @@ namespace YY {
                 construct(new_finish, x);
                 ++new_finish;
                 // 将原vector的备用空间内容也拷贝过来 虽然并不知道有什么用?
-                new_finish = uninitialized_copy(position + 1, finish, new_finish);
+                new_finish = uninitialized_copy(position, finish, new_finish);
             } catch (...) {
                 destroy(new_start, new_finish);
                 data_allocator::deallocate(new_start, len);
@@ -184,8 +183,28 @@ namespace YY {
             }
         } else {
             // 备用空间不足 需要额外配置空间
+            // 新长度 旧长度两倍或者 旧+新增个数
             const size_type old_size = size();
-
+            const size_type len = old_size + std::max(old_size, n);
+            iterator new_start = data_allocator::allocate(len);
+            iterator new_finish = new_start;
+            try {
+                // 拷贝 插入位置之前的元素
+                new_finish = uninitialized_copy(start, position, new_start);
+                // 填充要插入的元素
+                new_finish = uninitialized_fill_n(new_finish, n, x);
+                // 拷贝 插入位置之后的元素
+                new_finish = uninitialized_fill_n(position, finish, new_finish);
+            } catch (...) {
+                destroy(new_start, new_finish);
+                data_allocator::deallocate(new_start, len);
+                throw;
+            }
+            destroy(start, finish);
+            deallocate();
+            start = new_start;
+            finish = new_finish;
+            end_of_storage = new_start + len;
         }
     }
 }

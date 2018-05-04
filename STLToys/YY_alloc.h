@@ -41,7 +41,7 @@ namespace YY {
             return result;
         }
         // 模仿 C++ set_new_handler
-        static void (* set_malloc_handler(void (*f)()))() {
+        static void (* set_malloc_handler(void(*f)()))() {
             void (* old)() = __malloc_alloc_oom_handler;
             __malloc_alloc_oom_handler = f;
             return old;
