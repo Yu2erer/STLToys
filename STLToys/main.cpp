@@ -18,6 +18,10 @@ int main() {
     for (int i = 0; i < ii.size(); ++i) {
         cout << ii[i] << " ";
     }
+    ii.clear();
+    for (int i = 0; i < ii.size(); ++i) {
+        cout << ii[i] << " ";
+    }
     cout << endl;
     return 0;
 }

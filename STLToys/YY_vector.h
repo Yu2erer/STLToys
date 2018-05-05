@@ -26,6 +26,7 @@ namespace YY {
         typedef ptrdiff_t   difference_type;
 
     protected:
+        // 总是进入 iterator_traits<Iterator> 偏特化 所以之定义 typedef value_type* iterator
         // 使用经过包装的 simple_alloc 作为空间配置器
         typedef simple_alloc<value_type, Alloc> data_allocator;
         iterator start;
@@ -194,7 +195,7 @@ namespace YY {
                 // 填充要插入的元素
                 new_finish = uninitialized_fill_n(new_finish, n, x);
                 // 拷贝 插入位置之后的元素
-                new_finish = uninitialized_fill_n(position, finish, new_finish);
+                new_finish = uninitialized_copy(position, finish, new_finish);
             } catch (...) {
                 destroy(new_start, new_finish);
                 data_allocator::deallocate(new_start, len);
