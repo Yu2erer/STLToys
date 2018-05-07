@@ -3,4 +3,4 @@ project(STLToys)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(STLToys main.cpp yyalloc.h YY_construct.h YY_alloc.h YY_uninitialized.h YY_iterator.h YY_type_traits.h YY_vector.h)
+add_executable(STLToys main.cpp yyalloc.h YY_construct.h YY_alloc.h YY_uninitialized.h YY_iterator.h YY_type_traits.h YY_vector.h YY_list.h)

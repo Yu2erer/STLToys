@@ -4,6 +4,7 @@
 #include "yyalloc.h"
 //#include "YY_alloc.h"
 #include "YY_vector.h"
+#include "YY_list.h"
 using namespace std;
 
 int main() {
@@ -13,15 +14,17 @@ int main() {
 //    for (i = 0; i < iv.size(); ++i) {
 //        cout << iv[i] << " ";
 //    }
-    YY::vector<int> ii(2, 9);
-    ii.push_back(2);
-    for (int i = 0; i < ii.size(); ++i) {
-        cout << ii[i] << " ";
+    YY::vector<int> vec(2, 9);
+    vec.push_back(2);
+    for (int i = 0; i < vec.size(); ++i) {
+        cout << vec[i] << " ";
     }
-    ii.clear();
-    for (int i = 0; i < ii.size(); ++i) {
-        cout << ii[i] << " ";
-    }
+    cout << endl;
+
+    YY::list<int> list;
+    list.push_back(3);
+    list.push_front(2);
+    cout << *list.begin() << endl;
     cout << endl;
     return 0;
 }
