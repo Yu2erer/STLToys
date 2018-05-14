@@ -7,6 +7,7 @@
 #include "YY_list.h"
 #include "YY_deque.h"
 #include "YY_stack.h"
+#include "YY_queue.h"
 using namespace std;
 
 int main() {
@@ -43,16 +44,16 @@ int main() {
         std::cout << i << " ";
     }
     std::cout << std::endl;
+
     YY::stack<int> stack;
-    YY::stack<int> stack2;
     stack.push(2);
     stack.push(10);
     std::cout << stack.top() << std::endl;
-    std::cout << stack.size() << std::endl;
-//    if (stack == stack2) {
-//        std::cout << "true" << std::endl;
-//    } else {
-//        std::cout << "false" << std::endl;
-//    }
+
+    YY::queue<int> queue;
+    queue.push(3);
+    queue.push(4);
+    std::cout << queue.back() << std::endl;
+
     return 0;
 }

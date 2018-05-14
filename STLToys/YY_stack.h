@@ -40,8 +40,8 @@ namespace YY {
     protected:
         Sequence c;
     public:
-        bool empty() { return c.empty(); }
-        size_type size() { return c.size(); }
+        bool empty() const { return c.empty(); }
+        size_type size() const { return c.size(); }
         reference top() { return c.back(); }
         void push(const value_type& x) { c.push_back(x); }
         void pop() { c.pop_back(); }
