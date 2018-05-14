@@ -6,7 +6,7 @@
 #include "YY_vector.h"
 #include "YY_list.h"
 #include "YY_deque.h"
-//#include "YY_stack.h"
+#include "YY_stack.h"
 using namespace std;
 
 int main() {
@@ -42,8 +42,17 @@ int main() {
     for (auto i : ideq) {
         std::cout << i << " ";
     }
-//    YY::stack<int> stack;
-//    stack.push(2);
-//    std::cout << stack.top() << std::endl;
+    std::cout << std::endl;
+    YY::stack<int> stack;
+    YY::stack<int> stack2;
+    stack.push(2);
+    stack.push(10);
+    std::cout << stack.top() << std::endl;
+    std::cout << stack.size() << std::endl;
+//    if (stack == stack2) {
+//        std::cout << "true" << std::endl;
+//    } else {
+//        std::cout << "false" << std::endl;
+//    }
     return 0;
 }

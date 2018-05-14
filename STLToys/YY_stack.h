@@ -13,12 +13,26 @@
 
 namespace YY {
 
+    // 此处如果不前置声明的话 就支持不了 模板友元全特化了
+    template <class T, class Sequence>
+    class stack;
+
+    template <typename T, typename Sequence>
+    bool operator==(const stack<T, Sequence> &x, const stack<T, Sequence> &y) {
+        return x.c == y.c;
+    }
+
+    template <typename T, typename Sequence>
+    bool operator<(const stack<T, Sequence> &x, const stack<T, Sequence> &y) {
+        return x.c < y.c;
+    }
+
     // 默认使用 deque 作为底层容器
     template <typename T, typename Sequence = deque<T>>
     class stack {
         // 对具体的T 指代全特化
-        friend bool operator== <> (const stack&, const stack&);
-        friend bool operator< <> (const stack&, const stack&);
+        friend bool operator== <>(const stack&, const stack&);
+        friend bool operator< <>(const stack&, const stack&);
     public:
         typedef typename Sequence::value_type value_type;
         typedef typename Sequence::size_type size_type;
@@ -33,15 +47,6 @@ namespace YY {
         void pop() { c.pop_back(); }
     };
 
-    template <typename T, typename Sequence>
-    bool operator==(const stack<T, Sequence> &x, const stack<T, Sequence> &y) {
-        return x.c == y.c;
-    }
-
-    template <typename T, typename Sequence>
-    bool operator<(const stack<T, Sequence> &x, const stack<T, Sequence> &y) {
-        return x.c < y.c;
-    }
 
 }
 
