@@ -26,7 +26,7 @@ namespace YY {
         typedef ptrdiff_t   difference_type;
 
     protected:
-        // 总是进入 iterator_traits<Iterator> 偏特化 所以之定义 typedef value_type* iterator
+        // 总是进入 iterator_traits<Iterator> 偏特化 所以只定义 typedef value_type* iterator
         // 使用经过包装的 simple_alloc 作为空间配置器
         typedef simple_alloc<value_type, Alloc> data_allocator;
         iterator start;

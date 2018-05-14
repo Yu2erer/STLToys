@@ -81,15 +81,13 @@ namespace YY {
         return result + (last - first);
     }
 
-    template <typename ForwardIterator, typename T, typename T1>
+    template <typename ForwardIterator, typename T>
     inline void __uninitialized_fill_aux(ForwardIterator first, ForwardIterator last, const T& x, __true_type) {
         // FIXME: 应该使用 fill()
-        ForwardIterator cur = first;
-        for (; cur != last; ++cur) {
-            construct(&*cur, x);
-        }
+        std::fill(first, last, x);
     }
-    template <typename ForwardIterator, typename T, typename T1>
+
+    template <typename ForwardIterator, typename T>
     inline void __uninitialized_fill_aux(ForwardIterator first, ForwardIterator last, const T& x, __false_type) {
         ForwardIterator cur = first;
         for (; cur != last; ++cur) {
