@@ -141,6 +141,10 @@ namespace YY {
         deque(int n, const value_type& value) : start(), finish(), map(0), map_size(0) {
             fill_initialize(n, value);
         }
+        ~deque() {
+            destroy(start, finish);
+            destroy_map_and_nodes();
+        }
 
         iterator begin() { return start; }
         iterator end() { return finish; }
@@ -222,6 +226,13 @@ namespace YY {
         void clear();
     protected:
         void create_map_and_nodes(size_type num_elements);
+        void destroy_map_and_nodes(){
+            for (map_pointer cur = start.node; cur <= finish.node; ++cur){
+                deallocate_node(*cur);
+            }
+            map_allocator::deallocate(map, map_size);
+        }
+
         void fill_initialize(size_type n, const value_type& value);
         pointer allocate_node() { return data_allocator::allocate(buffer_size()); }
         void deallocate_node(pointer n) { data_allocator::deallocate(n, buffer_size()); }
