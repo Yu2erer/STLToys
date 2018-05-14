@@ -29,7 +29,7 @@ namespace YY {
 
         static size_t buffer_size() { return __deque_buf_size(BufSiz, sizeof(T)); }
 
-        typedef random_access_iterator_tag iterator_catagory;
+        typedef random_access_iterator_tag iterator_category;
         typedef T value_type;
         typedef Ref reference;
         typedef Ptr pointer;

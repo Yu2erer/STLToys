@@ -6,7 +6,7 @@
 #include "YY_vector.h"
 #include "YY_list.h"
 #include "YY_deque.h"
-#include "YY_stack.h"
+//#include "YY_stack.h"
 using namespace std;
 
 int main() {
