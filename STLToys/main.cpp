@@ -8,6 +8,7 @@
 #include "YY_deque.h"
 #include "YY_stack.h"
 #include "YY_queue.h"
+#include "YY_heap.h"
 using namespace std;
 
 int main() {
@@ -54,6 +55,15 @@ int main() {
     queue.push(3);
     queue.push(4);
     std::cout << queue.back() << std::endl;
+
+    vector<int> ve {0, 1, 2, 3 ,4 , 8, 9, 3 , 5};
+    YY::make_heap(ve.begin(), ve.end());
+    for (int i = 0; i < ve.size(); ++i) {
+        std::cout << ve[i] << " ";
+    }
+    std::cout << std::endl;
+    YY::pop_heap(ve.begin(), ve.end());
+    std::cout << ve.back() << std::endl;
 
     return 0;
 }
