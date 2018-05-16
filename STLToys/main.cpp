@@ -56,7 +56,6 @@ int main() {
     queue.push(3);
     queue.push(4);
     std::cout << queue.back() << std::endl;
-
     vector<int> ve {0, 1, 2, 3 ,4 , 8, 9, 3 , 5};
     YY::make_heap(ve.begin(), ve.end());
     for (int i = 0; i < ve.size(); ++i) {

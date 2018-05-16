@@ -97,6 +97,22 @@ namespace YY {
     }
 
     template <typename InputIterator, typename Distance>
+    inline void __distance(InputIterator first, InputIterator last, Distance& n, input_iterator_tag) {
+        while (first != last) { ++first; ++n; }
+    }
+
+    template <typename RandomAccessIterator, typename Distance>
+    inline void __distance(RandomAccessIterator first, RandomAccessIterator last, Distance& n, forward_iterator_tag) {
+        n += last - first;
+    }
+
+    template <typename InputIterator, typename Distance>
+    inline void distance(InputIterator first, InputIterator last, Distance& n) {
+        typedef typename iterator_traits<InputIterator>::iterator_category category;
+        return __distance(first, last, n, category());
+    }
+
+    template <typename InputIterator, typename Distance>
     inline void __advance(InputIterator &i, Distance n, input_iterator_tag) {
         while (n--) { ++i; }
     }
