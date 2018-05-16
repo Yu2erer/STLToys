@@ -160,7 +160,12 @@ namespace YY {
 
         bool empty() const { return node->next == node; }
 
-//        size_type size() { }
+        size_type size() {
+            size_type result = 0;
+            distance(begin(), end(), result);
+            return result;
+        }
+
         reference front() { return *begin(); }
         reference back() { return *(--end()); }
 
