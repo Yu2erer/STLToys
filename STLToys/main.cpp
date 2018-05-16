@@ -9,6 +9,7 @@
 #include "YY_stack.h"
 #include "YY_queue.h"
 #include "YY_heap.h"
+#include "YY_priority_queue.h"
 using namespace std;
 
 int main() {
@@ -65,5 +66,12 @@ int main() {
     YY::pop_heap(ve.begin(), ve.end());
     std::cout << ve.back() << std::endl;
 
+    std::cout << "priority_queue" << std::endl;
+    int it[9] = {0 , 1 , 2, 3, 4, 8,9,3,5};
+    YY::priority_queue<int> ipq(it, it + 9);
+    while (!ipq.empty()) {
+        std::cout << ipq.top() << " ";
+        ipq.pop();
+    }
     return 0;
 }

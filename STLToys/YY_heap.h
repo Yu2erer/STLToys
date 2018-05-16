@@ -13,7 +13,6 @@
 
 namespace YY {
 
-
     template <typename RandomAccessIterator, typename Distance, typename T>
     void __push_heap(RandomAccessIterator first, Distance holeIndex, Distance topIndex, T value) {
         Distance parent = (holeIndex - 1) / 2;
@@ -48,11 +47,11 @@ namespace YY {
             *(first + holeIndex) = *(first + secondChild);
             holeIndex = secondChild;
             secondChild = 2 * (holeIndex + 1);
-            // 右孩子 不存在 就搞左孩子
-            if (secondChild == len) {
-                *(first + holeIndex) = *(first + (secondChild - 1));
-                holeIndex = secondChild - 1;
-            }
+        }
+        // 右孩子 不存在 就搞左孩子
+        if (secondChild == len) {
+            *(first + holeIndex) = *(first + (secondChild - 1));
+            holeIndex = secondChild - 1;
         }
         __push_heap(first, holeIndex, topIndex, value);
     }
