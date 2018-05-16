@@ -48,7 +48,12 @@ namespace YY {
             finish = start + n;
             end_of_storage = finish;
         }
-
+        template <typename InputIterator>
+        void range_initialize(InputIterator first, InputIterator last, input_iterator_tag) {
+            for (; first < last; ++first) {
+                push_back(*first);
+            }
+        }
     public:
         iterator begin() { return start; }
         iterator end() { return finish; }
@@ -68,6 +73,12 @@ namespace YY {
         vector(int n, const T& value) { fill_initalize(n, value); }
         vector(long n, const T& value) { fill_initalize(n, value); }
         explicit vector(size_type n) { fill_initalize(n, T()); }
+
+        // 效率不高 没有针对 ForwardIterator 进行优化
+        template <typename InputIterator>
+        vector(InputIterator first, InputIterator last) : start(0), finish(0), end_of_storage(0) {
+            range_initialize(first, last, iterator_category(first));
+        }
 
         ~vector() {
             destroy(start, finish);
