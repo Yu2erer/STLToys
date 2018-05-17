@@ -105,6 +105,7 @@ namespace YY {
             iterator i = std::copy(last, finish, first);
             destroy(i, finish);
             finish = finish - (last - first);
+            return first;
         }
         iterator erase(iterator position) {
             if (position + 1 != end()) {

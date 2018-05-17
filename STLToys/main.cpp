@@ -10,6 +10,7 @@
 #include "YY_queue.h"
 #include "YY_heap.h"
 #include "YY_priority_queue.h"
+#include "YY_slist.h"
 using namespace std;
 
 int main() {
@@ -71,6 +72,20 @@ int main() {
     while (!ipq.empty()) {
         std::cout << ipq.top() << " ";
         ipq.pop();
+    }
+    std::cout << std::endl;
+
+    std::cout << "slist" << std::endl;
+    YY::slist<int> slist;
+    std::cout << "slist size: " <<slist.size() << std::endl;
+    slist.push_front(1);
+    slist.push_front(2);
+    slist.push_front(3);
+    std::cout << "slist size: " <<slist.size() << std::endl;
+    YY::slist<int>::iterator ite = slist.begin();
+    YY::slist<int>::iterator ite2 = slist.end();
+    for (;ite != ite2; ++ite) {
+        std::cout << *ite << std::endl;
     }
     return 0;
 }
