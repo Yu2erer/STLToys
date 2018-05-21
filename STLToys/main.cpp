@@ -11,27 +11,28 @@
 #include "YY_heap.h"
 #include "YY_priority_queue.h"
 #include "YY_slist.h"
-using namespace std;
+#include "YY_RBTree.h"
+
 
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
     unsigned int i;
-    vector<int, YY::allocator<int>> iv(ia, ia + 5);
+    std::vector<int, YY::allocator<int>> iv(ia, ia + 5);
     for (i = 0; i < iv.size(); ++i) {
-        cout << iv[i] << " ";
+        std::cout << iv[i] << " ";
     }
     YY::vector<int> vec(2, 9);
     vec.push_back(2);
     for (int i = 0; i < vec.size(); ++i) {
-        cout << vec[i] << " ";
+        std::cout << vec[i] << " ";
     }
-    cout << endl;
+    std::cout << std::endl;
 
     YY::list<int> list;
     list.push_back(3);
     list.push_front(2);
-    cout << *list.begin() << endl;
-    cout << endl;
+    std::cout << *list.begin() << std::endl;
+    std::cout << std::endl;
 
     YY::deque<int> ideq(20, 9);
     for (auto i : ideq) {
@@ -57,7 +58,7 @@ int main() {
     queue.push(3);
     queue.push(4);
     std::cout << queue.back() << std::endl;
-    vector<int> ve {0, 1, 2, 3 ,4 , 8, 9, 3 , 5};
+    std::vector<int> ve {0, 1, 2, 3 ,4 , 8, 9, 3 , 5};
     YY::make_heap(ve.begin(), ve.end());
     for (int i = 0; i < ve.size(); ++i) {
         std::cout << ve[i] << " ";
@@ -87,5 +88,23 @@ int main() {
     for (;ite != ite2; ++ite) {
         std::cout << *ite << std::endl;
     }
+
+    std::cout << "PB-Tree" << std::endl;
+    std::__identity<int>;
+    YY::rb_tree<int, int, std::__identity<int>> itree;
+    std::cout << "PB-Tree size: " << itree.size() << std::endl;
+//    itree.insert_unique(10);
+//    itree.insert_unique(7);
+//    itree.insert_unique(8);
+//    std::cout << "PB-Tree size: " << itree.size() << std::endl;
+//    itree.insert_unique(8);
+//    std::cout << "PB-Tree size: " << itree.size() << std::endl;
+//    YY::rb_tree<int, int, std::__identity<int>>::iterator itbegin = itree.begin();
+//    YY::rb_tree<int, int, std::__identity<int>>::iterator itend = itree.end();
+//    while (itbegin != itend) {
+//        std::cout << *itbegin << " ";
+//        ++itbegin;
+//    }
+//    std::cout << std::endl;
     return 0;
 }
