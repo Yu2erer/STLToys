@@ -131,7 +131,7 @@ namespace YY {
         bool operator!=(const self& x) { return (link_type)node != (link_type)(x.node); }
     };
 
-    template <typename Key, typename Value, typename KeyOfValue, typename Alloc = alloc>
+    template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc = alloc>
     class rb_tree {
     protected:
         typedef void* void_pointer;
@@ -163,7 +163,7 @@ namespace YY {
             }
             return tmp;
         }
-        link_type clone_type(link_type x) {
+        link_type clone_node(link_type x) {
             link_type tmp = create_node(x->value_field);
             tmp->color = x->color;
             tmp->left = 0;
@@ -177,6 +177,7 @@ namespace YY {
     protected:
         size_type node_count;
         link_type header;
+        Compare key_compare;
 
         link_type& root() const { return (link_type&)header->parent; }
         link_type& leftmost() const { return (link_type&)header->left; }
@@ -199,7 +200,7 @@ namespace YY {
         static link_type minimum(link_type x) { return (link_type)__rb_tree_node_base::minimum(x); }
         static link_type maximum(link_type x) { return (link_type)__rb_tree_node_base::maximum(x); }
     private:
-        iterator __insert(base_ptr x, base_ptr y, const value_type& v);
+        iterator __insert(base_ptr x_, base_ptr y_, const value_type& v);
         link_type __copy(link_type x, link_type p);
         void __erase(link_type x);
         void init() {
@@ -210,43 +211,46 @@ namespace YY {
             rightmost() = header;
         }
     public:
-        rb_tree() : node_count(0) { init(); }
+        rb_tree(const Compare& comp = Compare()) : node_count(0), key_compare(comp) { init(); }
         ~rb_tree() {
 //            clear();
             put_node(header);
         }
         rb_tree& operator=(const rb_tree& x);
+
+        Compare key_comp() const { return key_compare; }
         iterator begin() { return leftmost(); }
         iterator end() { return header; }
         bool empty() const { return node_count == 0; }
         size_type size() const { return node_count; }
         size_type max_size() const { return size_type(-1); }
+
         pair<iterator, bool> insert_unique(const value_type& v);
         iterator insert_equal(const value_type& v);
         iterator find(const Key& k);
     };
 
-    template <typename Key, typename Value, typename KeyOfValue, typename Alloc>
-    typename rb_tree<Key, Value, KeyOfValue, Alloc>::iterator rb_tree<Key, Value, KeyOfValue, Alloc>::insert_equal(const Value& v) {
+    template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc>
+    typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_equal(const Value& v) {
         link_type y = header;
         link_type x = root();
         while  (x) {
             y = x;
             // 小就往左走 大就往右走
-            x = KeyOfValue()(v) < key(x) ? left(x) : right(x);
+            x = key_compare(KeyOfValue()(v), key(x)) ? left(x) : right(x);
         }
         return __insert(x, y, v);
     }
 
-    template <typename Key, typename Value, typename KeyOfValue, typename Alloc>
-    pair<typename rb_tree<Key, Value, KeyOfValue, Alloc>::iterator, bool>
-    rb_tree<Key, Value, KeyOfValue, Alloc>::insert_unique(const Value& v) {
+    template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc>
+    pair<typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator, bool>
+    rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_unique(const Value& v) {
         link_type y = header;
         link_type x = root();
         bool comp = true;
         while (x) {
             y = x;
-            comp = KeyOfValue()(v) < key(x);
+            comp = key_compare(KeyOfValue()(v), key(x));
             x = comp ? left(x) : right(x);
         }
         iterator j = iterator(y);
@@ -257,7 +261,7 @@ namespace YY {
                 --j;
             }
         }
-        if (key(j.node) < KeyOfValue()(v)) {
+        if (key_compare(key(j.node), KeyOfValue()(v))) {
             return pair<iterator, bool>(__insert(x, y, v), true);
         }
         return pair<iterator, bool>(j, false);
@@ -340,12 +344,12 @@ namespace YY {
         root->color = __rb_tree_black;
     }
 
-    template <typename Key, typename Value, typename KeyOfValue, typename Alloc>
-    typename rb_tree<Key, Value, KeyOfValue, Alloc>::iterator rb_tree<Key, Value, KeyOfValue, Alloc>::__insert(base_ptr x_, base_ptr y_, const Value& v) {
+    template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc>
+    typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::__insert(base_ptr x_, base_ptr y_, const Value& v) {
         link_type x = (link_type)x_;
         link_type y = (link_type)y_;
         link_type z;
-        if (y == header || x || KeyOfValue()(v) < key(y)) {
+        if (y == header || x || key_compare(KeyOfValue()(v), key(y))) {
             z = create_node(v);
             left(y) = z;
             if (y == header) {
@@ -369,12 +373,12 @@ namespace YY {
         return iterator(z);
     }
 
-    template <typename Key, typename Value, typename KeyOfValue, typename Alloc>
-    typename rb_tree<Key, Value, KeyOfValue, Alloc>::iterator rb_tree<Key, Value, KeyOfValue, Alloc>::find(const Key& k) {
+    template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc>
+    typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::find(const Key& k) {
         link_type y = header;
         link_type x = root();
         while (x) {
-            if (!(key(x) < k)) {
+            if (!(key_compare(key(x), k))) {
                 y = x;
                 x = left(x);
             } else {
@@ -382,7 +386,7 @@ namespace YY {
             }
         }
         iterator j = iterator(y);
-        return (j == end() || k < key(j.node)) ? end() : j;
+        return (j == end() || key_compare(k, key(j.node))) ? end() : j;
     }
 };
 

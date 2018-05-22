@@ -54,7 +54,7 @@ namespace YY {
     // identity 证同 返回自身 在 set 中使用 因为set键值就是实值
     template <typename T>
     struct identity : public unary_function<T, T> {
-        T operator()(const T& x) const { return x; }
+        const T& operator()(const T& x) const { return x; }
     };
 
     // 选择函数
