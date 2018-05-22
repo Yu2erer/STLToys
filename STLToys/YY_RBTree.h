@@ -226,7 +226,11 @@ namespace YY {
         size_type max_size() const { return size_type(-1); }
 
         pair<iterator, bool> insert_unique(const value_type& v);
+        template <typename InputIterator, typename InputIterator>
+        pair<iterator, bool> insert_unique(InputIterator first, InputIterator last);
         iterator insert_equal(const value_type& v);
+        template <typename InputIterator, typename InputIterator>
+        iterator insert_equal(InputIterator first, InputIterator last);
         iterator find(const Key& k);
 
         void clear() {
@@ -407,6 +411,23 @@ namespace YY {
             destroy_node(x);
             x = y;
         }
+    }
+
+    template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc>
+    template <typename InputIterator>
+    typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_equal(InputIterator first, InputIterator last) {
+        for (; first != last; ++first) {
+            insert_equal(*first);
+        }
+    }
+    template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc>
+    template <typename InputIterator>
+    pair<typename rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::iterator, bool> rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::insert_unique(InputIterator first, InputIterator last) {
+        for (; first != last; ++first) {
+            insert_unique(*first);
+        }
+    }
+
     }
 };
 
