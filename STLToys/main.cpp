@@ -90,21 +90,24 @@ int main() {
     }
 
     std::cout << "PB-Tree" << std::endl;
-    std::__identity<int>;
-    YY::rb_tree<int, int, std::__identity<int>> itree;
+    YY::rb_tree<int, int, YY::identity<int>> itree;
     std::cout << "PB-Tree size: " << itree.size() << std::endl;
-//    itree.insert_unique(10);
-//    itree.insert_unique(7);
-//    itree.insert_unique(8);
-//    std::cout << "PB-Tree size: " << itree.size() << std::endl;
-//    itree.insert_unique(8);
-//    std::cout << "PB-Tree size: " << itree.size() << std::endl;
-//    YY::rb_tree<int, int, std::__identity<int>>::iterator itbegin = itree.begin();
-//    YY::rb_tree<int, int, std::__identity<int>>::iterator itend = itree.end();
-//    while (itbegin != itend) {
-//        std::cout << *itbegin << " ";
-//        ++itbegin;
-//    }
-//    std::cout << std::endl;
+    itree.insert_unique(10);
+    itree.insert_unique(7);
+    itree.insert_unique(8);
+    itree.insert_unique(15);
+    itree.insert_unique(5);
+    itree.insert_unique(6);
+    itree.insert_unique(11);
+    itree.insert_unique(13);
+    itree.insert_unique(12);
+    std::cout << "PB-Tree size: " << itree.size() << std::endl;
+    YY::rb_tree<int, int, YY::identity<int>>::iterator itbegin = itree.begin();
+    YY::rb_tree<int, int, YY::identity<int>>::iterator itend = itree.end();
+    while (itbegin != itend) {
+        std::cout << *itbegin << " ";
+        ++itbegin;
+    }
+    std::cout << std::endl;
     return 0;
 }

@@ -345,7 +345,7 @@ namespace YY {
         link_type x = (link_type)x_;
         link_type y = (link_type)y_;
         link_type z;
-        if (y == header || !x || KeyOfValue()(v) < key(y)) {
+        if (y == header || x || KeyOfValue()(v) < key(y)) {
             z = create_node(v);
             left(y) = z;
             if (y == header) {
