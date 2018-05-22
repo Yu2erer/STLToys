@@ -226,10 +226,10 @@ namespace YY {
         size_type max_size() const { return size_type(-1); }
 
         pair<iterator, bool> insert_unique(const value_type& v);
-        template <typename InputIterator, typename InputIterator>
+        template <typename InputIterator>
         pair<iterator, bool> insert_unique(InputIterator first, InputIterator last);
         iterator insert_equal(const value_type& v);
-        template <typename InputIterator, typename InputIterator>
+        template <typename InputIterator>
         iterator insert_equal(InputIterator first, InputIterator last);
         iterator find(const Key& k);
 
@@ -427,8 +427,6 @@ namespace YY {
             insert_unique(*first);
         }
     }
-
-    }
-};
+}
 
 #endif //STLTOYS_YY_RBTREE_H
