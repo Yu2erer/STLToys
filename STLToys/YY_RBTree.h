@@ -213,7 +213,7 @@ namespace YY {
     public:
         rb_tree(const Compare& comp = Compare()) : node_count(0), key_compare(comp) { init(); }
         ~rb_tree() {
-//            clear();
+            clear();
             put_node(header);
         }
         rb_tree& operator=(const rb_tree& x);
@@ -228,6 +228,16 @@ namespace YY {
         pair<iterator, bool> insert_unique(const value_type& v);
         iterator insert_equal(const value_type& v);
         iterator find(const Key& k);
+
+        void clear() {
+            if (node_count != 0) {
+                __erase(root());
+                leftmost() = header;
+                root() = 0;
+                rightmost() = header;
+                node_count = 0;
+            }
+        }
     };
 
     template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc>
@@ -387,6 +397,16 @@ namespace YY {
         }
         iterator j = iterator(y);
         return (j == end() || key_compare(k, key(j.node))) ? end() : j;
+    }
+
+    template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc>
+    void rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::__erase(link_type x) {
+        while (x) {
+            __erase(right(x));
+            link_type y = left(x);
+            destroy_node(x);
+            x = y;
+        }
     }
 };
 
