@@ -69,7 +69,7 @@ int main() {
 
     std::cout << "priority_queue" << std::endl;
     int it[9] = {0 , 1 , 2, 3, 4, 8,9,3,5};
-    YY::priority_queue<int> ipq(it, it + 9);
+    YY::priority_queue<int, YY::vector<int>, YY::greater<int>> ipq(it, it + 9);
     while (!ipq.empty()) {
         std::cout << ipq.top() << " ";
         ipq.pop();
