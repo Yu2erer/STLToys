@@ -12,7 +12,7 @@
 #include "YY_priority_queue.h"
 #include "YY_slist.h"
 #include "YY_RBTree.h"
-
+#include "YY_function.h"
 
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
