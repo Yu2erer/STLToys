@@ -10,7 +10,6 @@
 #define STLTOYS_YY_MAP_H
 
 #include "YY_alloc.h"
-#include "YY_pair.h"
 #include "YY_function.h"
 #include "YY_RBTree.h"
 

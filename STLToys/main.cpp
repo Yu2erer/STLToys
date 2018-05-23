@@ -15,7 +15,7 @@
 #include "YY_function.h"
 #include "YY_set.h"
 #include "YY_map.h"
-
+#include "YY_multiset.h"
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
     unsigned int i;
@@ -86,8 +86,7 @@ int main() {
     slist.push_front(3);
     std::cout << "slist size: " <<slist.size() << std::endl;
     YY::slist<int>::iterator ite = slist.begin();
-    YY::slist<int>::iterator ite2 = slist.end();
-    for (;ite != ite2; ++ite) {
+    for (;ite != slist.end(); ++ite) {
         std::cout << *ite << std::endl;
     }
 
@@ -105,8 +104,7 @@ int main() {
     itree.insert_unique(12);
     std::cout << "PB-Tree size: " << itree.size() << std::endl;
     YY::rb_tree<int, int, YY::identity<int>, YY::less<int>>::iterator itbegin = itree.begin();
-    YY::rb_tree<int, int, YY::identity<int>, YY::less<int>>::iterator itend = itree.end();
-    while (itbegin != itend) {
+    while (itbegin != itree.end()) {
         std::cout << *itbegin << " ";
         ++itbegin;
     }
@@ -119,8 +117,7 @@ int main() {
     iset.insert(3);
     iset.insert(5);
     YY::set<int>::iterator itebegin = iset.begin();
-    YY::set<int>::iterator iteend = iset.end();
-    for (; itebegin != iteend; ++itebegin) {
+    for (; itebegin != iset.end(); ++itebegin) {
         std::cout << *itebegin << " ";
     }
     std::cout << std::endl;
@@ -132,9 +129,19 @@ int main() {
     simap[1] = 1;
     simap[2] = 2;
     YY::map<int, int>::iterator simap_iter = simap.begin();
-    YY::map<int, int>::iterator simap_iter2 = simap.end();
-    for (; simap_iter != simap_iter2; ++simap_iter) {
+    for (; simap_iter != simap.end(); ++simap_iter) {
         std::cout << simap_iter->first <<  " " << simap_iter->second << std::endl;
+    }
+    std::cout << std::endl;
+
+    std::cout << "multiset" << std::endl;
+    YY::multiset<int> imultiset(test, test + 5);
+    std::cout << "multiset size: " << imultiset.size() << std::endl;
+    imultiset.insert(3);
+    imultiset.insert(5);
+    YY::multiset<int>::iterator imultibegin = imultiset.begin();
+    for (; imultibegin != imultiset.end(); ++imultibegin) {
+        std::cout << *imultibegin << " ";
     }
     std::cout << std::endl;
     return 0;
