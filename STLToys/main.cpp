@@ -128,7 +128,9 @@ int main() {
 
     std::cout << "map" << std::endl;
     YY::map<int, int> simap;
-    simap[1] = 1;
+    YY::pair<const int, int> pa(2, 1);
+    simap.insert(pa);
+    simap.insert(pa);
     simap[2] = 2;
     YY::map<int, int>::iterator simap_iter = simap.begin();
     for (; simap_iter != simap.end(); ++simap_iter) {
@@ -150,7 +152,7 @@ int main() {
 
     std::cout << "multimap" << std::endl;
     YY::multimap<int, int> simultimap;
-    simultimap[1] = 1;
+    simultimap[2] = 1;
     simultimap[2] = 2;
     YY::multimap<int, int>::iterator simultimap_iter = simultimap.begin();
     for (; simultimap_iter != simultimap.end(); ++simultimap_iter) {

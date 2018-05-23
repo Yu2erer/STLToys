@@ -127,8 +127,8 @@ namespace YY {
             decrement();
             return tmp;
         }
-        bool operator==(const self& x) { return (link_type)node == (link_type)(x.node); }
-        bool operator!=(const self& x) { return (link_type)node != (link_type)(x.node); }
+        bool operator==(const self& x) { return node == x.node; }
+        bool operator!=(const self& x) { return node != x.node; }
     };
 
     template <typename Key, typename Value, typename KeyOfValue, typename Compare, typename Alloc = alloc>

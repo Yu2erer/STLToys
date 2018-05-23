@@ -60,11 +60,11 @@ namespace YY {
     // 选择函数
     template <typename Pair>
     struct select1st : public unary_function<Pair, typename Pair::first_type> {
-        const typename Pair::first_type operator()(const Pair& x) const { return x.first; }
+        const typename Pair::first_type& operator()(const Pair& x) const { return x.first; }
     };
     template <typename Pair>
     struct select2nd : public unary_function<Pair, typename Pair::second_type> {
-        const typename Pair::second_type operator()(const Pair& x) const { return x.second; }
+        const typename Pair::second_type& operator()(const Pair& x) const { return x.second; }
     };
 
     // 投射函数 SGI STL 并没有使用过 这里只写一个
