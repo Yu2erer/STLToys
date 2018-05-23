@@ -14,6 +14,8 @@
 #include "YY_RBTree.h"
 #include "YY_function.h"
 #include "YY_set.h"
+#include "YY_map.h"
+
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
     unsigned int i;
@@ -124,5 +126,16 @@ int main() {
     std::cout << std::endl;
     itebegin = iset.find(3);
     std::cout << "find 3: " << *itebegin << std::endl;
+
+    std::cout << "map" << std::endl;
+    YY::map<int, int> simap;
+    simap[1] = 1;
+    simap[2] = 2;
+    YY::map<int, int>::iterator simap_iter = simap.begin();
+    YY::map<int, int>::iterator simap_iter2 = simap.end();
+    for (; simap_iter != simap_iter2; ++simap_iter) {
+        std::cout << simap_iter->first <<  " " << simap_iter->second << std::endl;
+    }
+    std::cout << std::endl;
     return 0;
 }
