@@ -16,6 +16,8 @@
 #include "YY_set.h"
 #include "YY_map.h"
 #include "YY_multiset.h"
+#include "YY_multimap.h"
+
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
     unsigned int i;
@@ -142,6 +144,17 @@ int main() {
     YY::multiset<int>::iterator imultibegin = imultiset.begin();
     for (; imultibegin != imultiset.end(); ++imultibegin) {
         std::cout << *imultibegin << " ";
+    }
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "multimap" << std::endl;
+    YY::multimap<int, int> simultimap;
+    simultimap[1] = 1;
+    simultimap[2] = 2;
+    YY::multimap<int, int>::iterator simultimap_iter = simultimap.begin();
+    for (; simultimap_iter != simultimap.end(); ++simultimap_iter) {
+        std::cout << simultimap_iter->first <<  " " << simultimap_iter->second << std::endl;
     }
     std::cout << std::endl;
     return 0;

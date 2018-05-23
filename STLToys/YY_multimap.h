@@ -1,13 +1,13 @@
 //
-//  YY_map.h
+//  YY_multimap.h
 //  STLToys
 //
 //  Created by ntian on 2018/5/23.
 //  Copyright © 2018 ntian. All rights reserved.
 //
 
-#ifndef STLTOYS_YY_MAP_H
-#define STLTOYS_YY_MAP_H
+#ifndef STLTOYS_YY_MULTIMAP_H
+#define STLTOYS_YY_MULTIMAP_H
 
 #include "YY_alloc.h"
 #include "YY_function.h"
@@ -16,7 +16,7 @@
 namespace YY {
 
     template <typename Key, typename T, typename Compare = less<Key>, typename Alloc = alloc>
-    class map {
+    class multimap {
     public:
         typedef Key key_type;
         typedef T data_type;
@@ -25,7 +25,7 @@ namespace YY {
         typedef Compare key_compare;
 
         class value_compare : public binary_function<value_type, value_type, bool> {
-            friend class map<Key, T, Compare, Alloc>;
+            friend class multimap<Key, T, Compare, Alloc>;
         protected:
             Compare comp;
             value_compare(Compare c) : comp(c) {}
@@ -47,15 +47,15 @@ namespace YY {
         typedef typename rep_type::size_type size_type;
         typedef typename rep_type::difference_type difference_type;
 
-        map() : t(Compare()) {}
-        explicit map(const Compare& comp) : t(comp) {}
+        multimap() : t(Compare()) {}
+        explicit multimap(const Compare& comp) : t(comp) {}
 
         template <typename InputIterator>
-        map(InputIterator first, InputIterator last) : t(Compare()) { t.insert_unique(first, last); }
+        multimap(InputIterator first, InputIterator last) : t(Compare()) { t.insert_equal(first, last); }
 
         template <typename InputIterator>
-        map(InputIterator first, InputIterator last, const Compare& comp) : t(comp) {
-            t.insert_unique(first, last);
+        multimap(InputIterator first, InputIterator last, const Compare& comp) : t(comp) {
+            t.insert_equal(first, last);
         }
 
         key_compare key_comp() const { return t.key_comp(); }
@@ -68,16 +68,16 @@ namespace YY {
         size_type size() const { return t.size(); }
         size_type max_size() const { return t.max_size(); }
         T& operator[](const key_type& k) {
-            return  (*(insert(value_type(k, T())).first)).second;
+            return  (*(insert(value_type(k, T())))).second;
         }
 
-        pair<iterator, bool> insert(const value_type& x) { return t.insert_unique(x); }
+        iterator insert(const value_type& x) { return t.insert_equal(x); }
         template <typename InputIterator>
-        void insert(InputIterator first, InputIterator last) { t.insert_unique(first, last); }
+        void insert(InputIterator first, InputIterator last) { t.insert_equal(first, last); }
 
         void clear() { t.clear(); }
         iterator find(const key_type& x) { return t.find(x); }
     };
 }
 
-#endif //STLTOYS_YY_MAP_H
+#endif //STLTOYS_YY_MULTIMAP_H
