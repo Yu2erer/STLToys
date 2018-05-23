@@ -151,6 +151,7 @@ namespace YY {
         typedef ptrdiff_t difference_type;
 
         typedef __rb_tree_iterator<value_type, reference, pointer> iterator;
+        typedef __rb_tree_iterator<value_type, const_reference, const_pointer> const_iterator;
     protected:
         link_type get_node() { return rb_tree_node_allocator::allocate(); }
         void put_node(link_type p) { return rb_tree_node_allocator::deallocate(p); }
@@ -220,7 +221,10 @@ namespace YY {
 
         Compare key_comp() const { return key_compare; }
         iterator begin() { return leftmost(); }
+        const_iterator begin() const { return leftmost(); }
         iterator end() { return header; }
+        const_iterator end() const { return header; }
+
         bool empty() const { return node_count == 0; }
         size_type size() const { return node_count; }
         size_type max_size() const { return size_type(-1); }

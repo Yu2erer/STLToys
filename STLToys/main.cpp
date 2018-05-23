@@ -13,7 +13,7 @@
 #include "YY_slist.h"
 #include "YY_RBTree.h"
 #include "YY_function.h"
-
+#include "YY_set.h"
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
     unsigned int i;
@@ -109,5 +109,20 @@ int main() {
         ++itbegin;
     }
     std::cout << std::endl;
+
+    std::cout << "set" << std::endl;
+    int test[5] = {0, 1, 2, 3, 4};
+    YY::set<int> iset(test, test + 5);
+    std::cout << "set size: " << iset.size() << std::endl;
+    iset.insert(3);
+    iset.insert(5);
+    YY::set<int>::iterator itebegin = iset.begin();
+    YY::set<int>::iterator iteend = iset.end();
+    for (; itebegin != iteend; ++itebegin) {
+        std::cout << *itebegin << " ";
+    }
+    std::cout << std::endl;
+    itebegin = iset.find(3);
+    std::cout << "find 3: " << *itebegin << std::endl;
     return 0;
 }
