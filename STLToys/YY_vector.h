@@ -144,6 +144,11 @@ namespace YY {
             finish = tmp + old_size;
             end_of_storage = start + n;
         }
+        void swap(vector& x) {
+            std::swap(start, x.start);
+            std::swap(finish, x.finish);
+            std::swap(end_of_storage, x.end_of_storage);
+        }
         void clear() { erase(begin(), end()); }
     };
 
