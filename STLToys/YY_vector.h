@@ -54,6 +54,16 @@ namespace YY {
                 push_back(*first);
             }
         }
+        template <typename ForwardIterator>
+        iterator allocate_and_copy(size_type n, ForwardIterator first, ForwardIterator last) {
+            iterator result = data_allocator::allocate(n);
+            try {
+                uninitialized_copy(first, last, result);
+                return result;
+            } catch (...) {
+                data_allocator::deallocate(result, n);
+            }
+        }
     public:
         iterator begin() { return start; }
         iterator end() { return finish; }
@@ -124,6 +134,16 @@ namespace YY {
             }
         }
         void resize(size_type new_size) { resize(new_size, T()); }
+        void reserve(size_type n) {
+            if (capacity() >= n) { return; }
+            const size_type old_size = size();
+            iterator tmp = allocate_and_copy(n, start, finish);
+            destroy(start, finish);
+            deallocate();
+            start = tmp;
+            finish = tmp + old_size;
+            end_of_storage = start + n;
+        }
         void clear() { erase(begin(), end()); }
     };
 
