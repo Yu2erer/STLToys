@@ -1,13 +1,13 @@
 //
-//  YY_hash_map.h
+//  YY_hash_multimap.h
 //  STLToys
 //
 //  Created by ntian on 2018/5/28.
 //  Copyright © 2018 ntian. All rights reserved.
 //
 
-#ifndef STLTOYS_YY_HASH_MAP_H
-#define STLTOYS_YY_HASH_MAP_H
+#ifndef STLTOYS_YY_HASH_MULTIMAP_H
+#define STLTOYS_YY_HASH_MULTIMAP_H
 
 #include "YY_alloc.h"
 #include "YY_function.h"
@@ -18,7 +18,7 @@ namespace YY {
 
     template <typename Key, typename T, typename HashFcn = Hash<Key>,
             typename EqualKey = equal_to<Key>, typename Alloc = alloc>
-    class hash_map {
+    class hash_multimap {
     private:
         typedef hashtable<pair<const Key, T>, Key, HashFcn, select1st<pair<const Key, T>>, EqualKey, Alloc> ht;
         ht rep;
@@ -41,26 +41,26 @@ namespace YY {
         hasher hash_funct() const { return rep.hash_funct(); }
         key_equal key_eq() const { return rep.key_eq(); }
     public:
-        hash_map() : rep(100, hasher(), key_equal()) {}
-        explicit hash_map(size_type n) : rep(n, hasher(), key_equal()) {}
-        hash_map(size_type n, const hasher& hf) : rep(n, hf, key_equal()) {}
-        hash_map(size_type n, const hasher& hf, const key_equal & eql) : rep(n, hf, eql) {}
+        hash_multimap() : rep(100, hasher(), key_equal()) {}
+        explicit hash_multimap(size_type n) : rep(n, hasher(), key_equal()) {}
+        hash_multimap(size_type n, const hasher& hf) : rep(n, hf, key_equal()) {}
+        hash_multimap(size_type n, const hasher& hf, const key_equal & eql) : rep(n, hf, eql) {}
 
         template <typename InputIterator>
-        hash_map(InputIterator first, InputIterator last) : rep(100, hasher(), key_equal()) {
-            rep.insert_unique(first, last);
+        hash_multimap(InputIterator first, InputIterator last) : rep(100, hasher(), key_equal()) {
+            rep.insert_equal(first, last);
         }
         template <typename InputIterator>
-        hash_map(InputIterator first, InputIterator last, size_type n) : rep(n, hasher(), key_equal()) {
-            rep.insert_unique(first, last);
+        hash_multimap(InputIterator first, InputIterator last, size_type n) : rep(n, hasher(), key_equal()) {
+            rep.insert_equal(first, last);
         }
         template <typename InputIterator>
-        hash_map(InputIterator first, InputIterator last, size_type n, const hasher& hf) : rep(n, hf, key_equal()) {
-            rep.insert_unique(first, last);
+        hash_multimap(InputIterator first, InputIterator last, size_type n, const hasher& hf) : rep(n, hf, key_equal()) {
+            rep.insert_equal(first, last);
         }
         template <typename InputIterator>
-        hash_map(InputIterator first, InputIterator last, size_type n, const hasher& hf, const key_equal& eql) : rep(n, hf, eql) {
-            rep.insert_unique(first, last);
+        hash_multimap(InputIterator first, InputIterator last, size_type n, const hasher& hf, const key_equal& eql) : rep(n, hf, eql) {
+            rep.insert_equal(first, last);
         }
     public:
         size_type size() const { return rep.size(); }
@@ -74,18 +74,15 @@ namespace YY {
         void resize(size_type hint) { rep.resize(hint); }
         size_type bucket_count() { return rep.bucket_count(); }
         size_type max_bucket_count() { return rep.max_bucket_count(); }
-        pair<iterator, bool> insert(const value_type& obj) {
-            return rep.insert_unique(obj);
+        iterator insert(const value_type& obj) {
+            return rep.insert_equal(obj);
         }
         template <typename InputIterator>
-        void insert(InputIterator first, InputIterator last) { rep.insert_unique(first, last); }
-        pair<iterator, bool> insert_noresize(const value_type& obj) {
-            return rep.insert_unique_noresize(obj);
-        }
-        T& operator[](const key_type& key) {
-            return rep.find_or_insert(value_type(key, T())).second;
+        void insert(InputIterator first, InputIterator last) { rep.insert_equal(first, last); }
+        iterator insert_noresize(const value_type& obj) {
+            return rep.insert_equal(obj);
         }
     };
 }
 
-#endif //STLTOYS_YY_HASH_MAP_H
+#endif //STLTOYS_YY_HASH_MULTIMAP_H

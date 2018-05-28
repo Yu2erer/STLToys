@@ -22,6 +22,7 @@
 #include "YY_hash_set.h"
 #include "YY_hash_multiset.h"
 #include "YY_hash_map.h"
+#include "YY_hash_multimap.h"
 
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
@@ -230,6 +231,14 @@ int main() {
         std::cout << (*hash_mapbegin).first << " " << (*hash_mapbegin).second << std::endl;
     }
 
-    
+    std::cout << "hash_multimap" << std::endl;
+    YY::hash_multimap<int, int> hash_multimap;
+    hash_multimap.insert(YY::pair<const int, int>(1, 2));
+    hash_multimap.insert(YY::pair<const int, int>(2, 3));
+    hash_multimap.insert(YY::pair<const int, int>(1, 0));
+    YY::hash_multimap<int, int>::iterator hash_multimapbegin = hash_multimap.begin();
+    for (; hash_multimapbegin != hash_multimap.end(); ++hash_multimapbegin) {
+        std::cout << (*hash_multimapbegin).first << " " << (*hash_multimapbegin).second << std::endl;
+    }
     return 0;
 }
