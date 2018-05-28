@@ -35,7 +35,7 @@ namespace YY {
     template <typename T>
     inline T identity_element(plus<T>) { return T(0); }
 
-    // 关系运算符 这里只写两个 = != < <= >= >
+    // 关系运算符 这里只写三个 = != < <= >= >
     template <typename T>
     struct greater : public binary_function<T, T, bool> {
         bool operator()(const T& x, const T& y) const { return x > y; }
@@ -43,6 +43,10 @@ namespace YY {
     template <typename T>
     struct less : public binary_function<T, T, bool> {
         bool operator()(const T& x, const T& y) const { return x < y; }
+    };
+    template <typename T>
+    struct equal_to : public binary_function<T, T, bool> {
+        bool operator()(const T& x, const T& y) const { return x == y; }
     };
 
     // 逻辑运算符 只写一个 and or not
