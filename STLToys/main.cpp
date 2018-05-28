@@ -20,6 +20,7 @@
 #include "YY_hashtable.h"
 #include "YY_hash_fun.h"
 #include "YY_hash_set.h"
+#include "YY_hash_multiset.h"
 
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
@@ -188,7 +189,7 @@ int main() {
     std::cout << "hashtable size: " << iht.size() << std::endl;
     std::cout << "bucket counts: " << iht.bucket_count() << std::endl;
 
-    std::cout << "hashset" << std::endl;
+    std::cout << "hash_set" << std::endl;
     YY::hash_set<int> hash_set;
     hash_set.insert(59);
     hash_set.insert(63);
@@ -200,6 +201,21 @@ int main() {
     YY::hash_set<int>::iterator hash_setbegin = hash_set.begin();
     for (;  hash_setbegin != hash_set.end(); ++hash_setbegin) {
         std::cout << *hash_setbegin << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "hash_multiset" << std::endl;
+    YY::hash_multiset<int> hash_multiset;
+    hash_multiset.insert(59);
+    hash_multiset.insert(63);
+    hash_multiset.insert(108);
+    hash_multiset.insert(2);
+    hash_multiset.insert(55);
+    hash_multiset.insert(53);
+    hash_multiset.insert(55);
+    YY::hash_multiset<int>::iterator hash_multisetbegin = hash_multiset.begin();
+    for (;  hash_multisetbegin != hash_multiset.end(); ++hash_multisetbegin) {
+        std::cout << *hash_multisetbegin << " ";
     }
     std::cout << std::endl;
     return 0;
