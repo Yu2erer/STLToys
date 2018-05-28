@@ -105,7 +105,9 @@ namespace YY {
         typedef Key key_type;
         typedef Value value_type;
         typedef Value& reference;
+        typedef const Value& const_reference;
         typedef Value* pointer;
+        typedef const Value* const_pointer;
         typedef __hashtable_iterator<Value, Key, HashFcn, ExtractKey, EqualKey, Alloc> iterator;
         friend struct
                 __hashtable_iterator<Value, Key, HashFcn, ExtractKey, EqualKey, Alloc>;
@@ -131,7 +133,8 @@ namespace YY {
             return end();
         }
         iterator end() { return iterator(0, this); }
-
+        hasher hash_funct() const { return hash; }
+        key_equal key_eq() const { return equals; }
         bool empty() const { return size() == 0; }
         void resize(size_type num_elements_hint);
     private:
@@ -192,6 +195,37 @@ namespace YY {
 
         void clear();
         void copy_from(const hashtable& ht);
+
+        template <typename InputIterator>
+        void insert_unique(InputIterator first, InputIterator last) {
+            insert_unique(first, last, iterator_category(first));
+        }
+        template <typename InputIterator>
+        void insert_unique(InputIterator first, InputIterator last, input_iterator_tag) {
+            for(;first != last; ++first) { insert_unique(*first); }
+        }
+        template <typename ForwardIterator>
+        void insert_unique(ForwardIterator first, ForwardIterator last, forward_iterator_tag) {
+            size_type n = 0;
+            distance(first, last, n);
+            resize(num_elements + n);
+            for (; n > 0; --n, ++first) { insert_unique_noresize(*first); }
+        }
+        template <typename InputIterator>
+        void insert_equal(InputIterator first, InputIterator last) {
+            insert_equal(first, last, iterator_category(first));
+        }
+        template <typename InputIterator>
+        void insert_equal(InputIterator first, InputIterator last, input_iterator_tag) {
+            for(;first != last; ++first) { insert_equal(*first); }
+        }
+        template <typename ForwardIterator>
+        void insert_equal(ForwardIterator first, ForwardIterator last, forward_iterator_tag) {
+            size_type n = 0;
+            distance(first, last, n);
+            resize(num_elements + n);
+            for (; n > 0; --n, ++first) { insert_equal_noresize(*first); }
+        }
     };
 
     template <typename V, typename K, typename HF, typename Ex, typename Eq, typename A>

@@ -19,6 +19,7 @@
 #include "YY_multimap.h"
 #include "YY_hashtable.h"
 #include "YY_hash_fun.h"
+#include "YY_hash_set.h"
 
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
@@ -186,5 +187,20 @@ int main() {
     }
     std::cout << "hashtable size: " << iht.size() << std::endl;
     std::cout << "bucket counts: " << iht.bucket_count() << std::endl;
+
+    std::cout << "hashset" << std::endl;
+    YY::hash_set<int> hash_set;
+    hash_set.insert(59);
+    hash_set.insert(63);
+    hash_set.insert(108);
+    hash_set.insert(2);
+    hash_set.insert(55);
+    hash_set.insert(53);
+    hash_set.insert(55);
+    YY::hash_set<int>::iterator hash_setbegin = hash_set.begin();
+    for (;  hash_setbegin != hash_set.end(); ++hash_setbegin) {
+        std::cout << *hash_setbegin << " ";
+    }
+    std::cout << std::endl;
     return 0;
 }
