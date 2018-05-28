@@ -17,6 +17,8 @@
 #include "YY_map.h"
 #include "YY_multiset.h"
 #include "YY_multimap.h"
+#include "YY_hashtable.h"
+#include "YY_hash_fun.h"
 
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
@@ -159,5 +161,30 @@ int main() {
         std::cout << simultimap_iter->first <<  " " << simultimap_iter->second << std::endl;
     }
     std::cout << std::endl;
+
+    std::cout << "hashtable" << std::endl;
+    YY::hashtable<int, int, YY::Hash<int>, YY::identity<int>, YY::equal_to<int>, YY::alloc>
+            iht(50, YY::Hash<int>(), YY::equal_to<int>());
+    std::cout << "hashtable size: " << iht.size() << std::endl;
+    std::cout << "bucket counts: " << iht.bucket_count() << std::endl;
+    iht.insert_unique(59);
+    iht.insert_unique(63);
+    iht.insert_unique(108);
+    iht.insert_unique(2);
+    iht.insert_unique(55);
+    iht.insert_unique(53);
+    iht.insert_unique(55);
+    std::cout << "hashtable size: " << iht.size() << std::endl;
+    YY::hashtable<int, int, YY::Hash<int>, YY::identity<int>, YY::equal_to<int>, YY::alloc>::iterator
+        ihtbegin = iht.begin();
+    for (int i = 0; i < iht.size(); ++i, ++ihtbegin) {
+        std::cout << *ihtbegin << " ";
+    }
+    std::cout << std::endl;
+    for (int i = 0; i <= 47; ++i) {
+        iht.insert_equal(i);
+    }
+    std::cout << "hashtable size: " << iht.size() << std::endl;
+    std::cout << "bucket counts: " << iht.bucket_count() << std::endl;
     return 0;
 }
