@@ -21,6 +21,7 @@
 #include "YY_hash_fun.h"
 #include "YY_hash_set.h"
 #include "YY_hash_multiset.h"
+#include "YY_hash_map.h"
 
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
@@ -218,5 +219,17 @@ int main() {
         std::cout << *hash_multisetbegin << " ";
     }
     std::cout << std::endl;
+
+    std::cout << "hash_map" << std::endl;
+    YY::hash_map<int, int> hash_map;
+    hash_map[1] = 2;
+    hash_map[2] = 3;
+    hash_map[1] = 0;
+    YY::hash_map<int, int>::iterator hash_mapbegin = hash_map.begin();
+    for (; hash_mapbegin != hash_map.end(); ++hash_mapbegin) {
+        std::cout << (*hash_mapbegin).first << " " << (*hash_mapbegin).second << std::endl;
+    }
+
+    
     return 0;
 }
