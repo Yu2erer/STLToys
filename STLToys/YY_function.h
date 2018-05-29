@@ -25,17 +25,23 @@ namespace YY {
         typedef Result result_type;
     };
 
-    // 算术类仿函数共 6 个 这里只写一个 加 减 乘 除 模取 否定
+    // 算术类仿函数共 6 个 这里只写两个 加 减 乘 除 模取 否定
     template <typename T>
     struct plus : public binary_function<T, T, T> {
         T operator()(const T& x, const T& y) const { return x + y; }
+    };
+    template <typename T>
+    struct multiplies : public binary_function<T, T, T> {
+        T operator()(const T& x, const T& y) const { return x * y; }
     };
 
     // 证同元素 作为内部使用 返回加法类型的证同元素 0 因为 加0等于本身
     template <typename T>
     inline T identity_element(plus<T>) { return T(0); }
+    template <typename T>
+    inline T identity_element(multiplies<T>) { return T(1); }
 
-    // 关系运算符 这里只写三个 = != < <= >= >
+        // 关系运算符 这里只写三个 = != < <= >= >
     template <typename T>
     struct greater : public binary_function<T, T, bool> {
         bool operator()(const T& x, const T& y) const { return x > y; }
