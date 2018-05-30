@@ -161,8 +161,7 @@ namespace YY {
             // 先 构造一个与当前元素值相同的元素 得到 0 2 3 4 5 5
             // 将 2 3 4 翻转 得到 4 3 2 插入到 5 的位置
             // 得到 0 * 2 3 4 5 此时 再给迭代器赋值即插入
-            // FIXME: 以后将 std::copy_backward() 替换掉
-            std::copy_backward(position, finish - 2, finish - 1);
+            copy_backward(position, finish - 2, finish - 1);
             *position = x_copy;
         } else {
             // 没有备用空间了
@@ -206,8 +205,8 @@ namespace YY {
                 // 插入点之后的已有元素 > 新增元素个数
                 uninitialized_copy(finish - n, finish, finish);
                 finish += n;
-                // FIXME: 以后将 std::copy_backward()和 std::fill() 替换掉
-                std::copy_backward(position, old_finish - n, old_finish);
+                // FIXME: 以后将 std::fill() 替换掉
+                copy_backward(position, old_finish - n, old_finish);
                 std::fill(position, position + n, x_copy);
             } else {
                 // 插入点之后的已有元素 < 新增元素个数
@@ -222,7 +221,7 @@ namespace YY {
             // 备用空间不足 需要额外配置空间
             // 新长度 旧长度两倍或者 旧+新增个数
             const size_type old_size = size();
-            const size_type len = old_size + std::max(old_size, n);
+            const size_type len = old_size + max(old_size, n);
             iterator new_start = data_allocator::allocate(len);
             iterator new_finish = new_start;
             try {

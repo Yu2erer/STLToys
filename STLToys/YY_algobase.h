@@ -200,6 +200,12 @@ namespace YY {
     inline T* __copy_backward_t(const T* first, const T* last, T* result, __false_type) {
         return __copy_backward(first, last, result);
     }
+    template <typename BidirectionalIterator1, typename BidirectionalIterator2>
+    struct __copy_backward_dispatch {
+        BidirectionalIterator2 operator()(BidirectionalIterator1 first, BidirectionalIterator1 last, BidirectionalIterator2 result) {
+            return __copy_backward(first, last, result);
+        }
+    };
     template <typename T>
     struct __copy_backward_dispatch<const T*, T*> {
         T* operator()(const T* first, const T* last, T* result) {
@@ -212,12 +218,6 @@ namespace YY {
         T* operator()(T* first, T* last, T* result) {
             typedef typename __type_traits<T>::has_trivial_assignment_operator t;
             return __copy_backward_t(first, last, result, t());
-        }
-    };
-    template <typename BidirectionalIterator1, typename BidirectionalIterator2>
-    struct __copy_backward_dispatch {
-        BidirectionalIterator2 operator()(BidirectionalIterator1 first, BidirectionalIterator1 last, BidirectionalIterator2 result) {
-            return __copy_backward(first, last, result);
         }
     };
     template <typename BidirectionalIterator1, typename BidirectionalIterator2>

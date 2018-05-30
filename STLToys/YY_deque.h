@@ -202,7 +202,7 @@ namespace YY {
             difference_type index = pos - start;
             // 如果 pos之前的元素小于 size() 的一半 就移动前面的 元素 否则 移动后面的元素
             if (index < (size() >> 1)) {
-                std::copy_backward(start, pos, next);
+                copy_backward(start, pos, next);
                 pop_front();
             } else {
                 copy(next, finish, pos);
@@ -337,7 +337,7 @@ namespace YY {
             if (new_nstart < start.node) {
                 copy(start.node, finish.node + 1, new_nstart);
             } else {
-                std::copy_backward(start.node, finish.node + 1, new_nstart + old_num_nodes);
+                copy_backward(start.node, finish.node + 1, new_nstart + old_num_nodes);
             }
         } else {
             // 不够了 配置新map
@@ -402,7 +402,7 @@ namespace YY {
             difference_type n = last - first;
             difference_type elems_before = first - start;
             if (elems_before < (size() - n) / 2) {
-                std::copy_backward(start, first, last);
+                copy_backward(start, first, last);
                 iterator new_start = start + n;
                 destroy(start, new_start);
                 for (map_pointer cur = start.node; cur < new_start.node; ++cur) {
@@ -443,7 +443,7 @@ namespace YY {
             iterator back2 = back1;
             --back2;
             pos = start + index;
-            std::copy_backward(pos, back2, back1);
+            copy_backward(pos, back2, back1);
         }
         *pos = x_copy;
         return pos;
