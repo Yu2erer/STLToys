@@ -35,7 +35,7 @@ namespace YY {
     OutputIterator adjacent_difference(InputIterator first, InputIterator last, OutputIterator result){
         if (first == last) { return result; }
         *result = *first;
-        iterator_traits<InputIterator>::value_type value = *first;
+        typename iterator_traits<InputIterator>::value_type value = *first;
         while (++first != last) {
             iterator_traits<InputIterator>::value_type tmp = *first;
             *++result = tmp - value;
@@ -47,7 +47,7 @@ namespace YY {
     OutputIterator adjacent_difference(InputIterator first, InputIterator last, OutputIterator result, BinaryOperation binary_op) {
         if (first == last) { return result; }
         *result = *first;
-        iterator_traits<InputIterator>::value_type value = *first;
+        typename iterator_traits<InputIterator>::value_type value = *first;
         while (++first != last) {
             iterator_traits<InputIterator>::value_type tmp = *first;
             *++result = binary_op(tmp, value);
@@ -78,7 +78,7 @@ namespace YY {
     OutputIterator partial_sum(InputIterator first, InputIterator last, OutputIterator result) {
         if (first == last) { return result; }
         *result = *first;
-        iterator_traits<InputIterator>::value_type value = *first;
+        typename iterator_traits<InputIterator>::value_type value = *first;
         while (++first != last) {
             value = value + *first;
             *++result = value;
@@ -89,7 +89,7 @@ namespace YY {
     OutputIterator partial_sum(InputIterator first, InputIterator last, OutputIterator result, BinaryOperation binary_op) {
         if (first == last) { return result; }
         *result = *first;
-        iterator_traits<InputIterator>::value_type value = *first;
+        typename iterator_traits<InputIterator>::value_type value = *first;
         while (++first != last) {
             value = binary_op(value, *first);
             *++result = value;
