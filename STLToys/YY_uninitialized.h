@@ -13,6 +13,7 @@
 #include "YY_construct.h"
 #include "YY_iterator.h"
 #include "YY_type_traits.h"
+#include "YY_algobase.h"
 
 namespace YY {
 
@@ -49,7 +50,7 @@ namespace YY {
     template <typename InputIterator, typename ForwardIterator>
     inline ForwardIterator __uninitialized_copy_aux(InputIterator first, InputIterator last, ForwardIterator result, __true_type) {
         // FIXME: 应该使用 copy()
-        return std::copy(first, last, result);
+        return copy(first, last, result);
     }
 
     template <typename InputIterator, typename ForwardIterator>
