@@ -49,7 +49,6 @@ namespace YY {
 
     template <typename InputIterator, typename ForwardIterator>
     inline ForwardIterator __uninitialized_copy_aux(InputIterator first, InputIterator last, ForwardIterator result, __true_type) {
-        // FIXME: 应该使用 copy()
         return copy(first, last, result);
     }
 
