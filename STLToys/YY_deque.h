@@ -12,6 +12,7 @@
 #include "YY_alloc.h"
 #include "YY_iterator.h"
 #include "YY_uninitialized.h"
+#include "YY_algobase.h"
 
 namespace YY {
 
@@ -204,7 +205,7 @@ namespace YY {
                 std::copy_backward(start, pos, next);
                 pop_front();
             } else {
-                std::copy(next, finish, pos);
+                copy(next, finish, pos);
                 pop_back();
             }
             return start + index;
@@ -334,7 +335,7 @@ namespace YY {
         if (map_size > 2 * new_num_nodes) {
             new_nstart = map + (map_size - new_num_nodes) / 2 + (add_at_front ? nodes_to_add : 0);
             if (new_nstart < start.node) {
-                std::copy(start.node, finish.node + 1, new_nstart);
+                copy(start.node, finish.node + 1, new_nstart);
             } else {
                 std::copy_backward(start.node, finish.node + 1, new_nstart + old_num_nodes);
             }
@@ -344,7 +345,7 @@ namespace YY {
             map_pointer new_map = map_allocator::allocate(new_map_size);
             new_nstart = new_map + (new_map_size - new_num_nodes) / 2 + (add_at_front ? nodes_to_add : 0);
             // 将原 map 拷贝过来
-            std::copy(start.node, finish.node + 1, new_nstart);
+            copy(start.node, finish.node + 1, new_nstart);
             // 释放掉原来的 map
             map_allocator::deallocate(map, map_size);
             // 重新设置 map
@@ -409,7 +410,7 @@ namespace YY {
                 }
                 start = new_start;
             } else {
-                std::copy(last, finish, first);
+                copy(last, finish, first);
                 iterator new_finish = finish - n;
                 destroy(new_finish, finish);
                 for (map_pointer cur = new_finish.node + 1; cur <= finish.node; ++cur) {
@@ -434,7 +435,7 @@ namespace YY {
             pos = start + index;
             iterator pos1 = pos;
             ++pos1;
-            std::copy(front2, pos1, front1);
+            copy(front2, pos1, front1);
         } else {
             push_back(back());
             iterator back1 = finish;

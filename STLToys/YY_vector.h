@@ -11,6 +11,7 @@
 
 #include "YY_alloc.h"
 #include "YY_uninitialized.h"
+#include "YY_algobase.h"
 
 namespace YY {
 
@@ -110,17 +111,15 @@ namespace YY {
         void insert(iterator position, size_type n, const T& x);
         iterator erase(iterator first, iterator last) {
             // 先暂时使用 std 里的函数
-            // FIXME: 以后将 std::copy() 替换掉
             // copy 函数 将 last-finish 挪到 first-(finish - first + 1)
-            iterator i = std::copy(last, finish, first);
+            iterator i = copy(last, finish, first);
             destroy(i, finish);
             finish = finish - (last - first);
             return first;
         }
         iterator erase(iterator position) {
             if (position + 1 != end()) {
-                // FIXME: 以后将 std::copy() 替换掉
-                std::copy(position + 1, finish, position);
+                copy(position + 1, finish, position);
             }
             --finish;
             destroy(finish);
@@ -145,9 +144,9 @@ namespace YY {
             end_of_storage = start + n;
         }
         void swap(vector& x) {
-            std::swap(start, x.start);
-            std::swap(finish, x.finish);
-            std::swap(end_of_storage, x.end_of_storage);
+            YY::swap(start, x.start);
+            YY::swap(finish, x.finish);
+            YY::swap(end_of_storage, x.end_of_storage);
         }
         void clear() { erase(begin(), end()); }
     };
