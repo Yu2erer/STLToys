@@ -102,7 +102,7 @@ namespace YY {
     }
 
     template <typename RandomAccessIterator, typename Distance>
-    inline void __distance(RandomAccessIterator first, RandomAccessIterator last, Distance& n, forward_iterator_tag) {
+    inline void __distance(RandomAccessIterator first, RandomAccessIterator last, Distance& n, random_access_iterator_tag) {
         n += last - first;
     }
 
