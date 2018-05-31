@@ -23,6 +23,7 @@
 #include "YY_hash_multiset.h"
 #include "YY_hash_map.h"
 #include "YY_hash_multimap.h"
+#include "YY_algo.h"
 
 int main() {
     int ia[5] = {0, 1, 2, 3, 4};
