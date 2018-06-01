@@ -89,6 +89,98 @@ namespace YY {
         return YY::copy(first2, last2, YY::copy(first1, last1, result));
     }
 
+    template <typename ForwardIterator, typename T, typename Distance>
+    ForwardIterator __lower_bound(ForwardIterator first, ForwardIterator last, const T& value, Distance*, forward_iterator_tag) {
+        Distance len = 0;
+        distance(first, last, len);
+        Distance half;
+        ForwardIterator middle;
+        while (len > 0) {
+            half = len >> 1;
+            middle = first;
+            advance(middle, half);
+            if (*middle < value) {
+                first = middle;
+                ++first;
+                len = len - half - 1;
+            } else {
+                len = half;
+            }
+        }
+        return first;
+    }
+
+    template <typename RandomAccessIterator, typename T, typename Distance>
+    RandomAccessIterator __lower_bound(RandomAccessIterator first, RandomAccessIterator last, const T& value, Distance*, random_access_iterator_tag) {
+        Distance len = last - first;
+        Distance half;
+        RandomAccessIterator middle;
+        while (len > 0) {
+            half = len >> 1;
+            middle = first + half;
+            if (*middle < value) {
+                first = middle;
+                ++first;
+                len = len - half - 1;
+            } else {
+                len = half;
+            }
+        }
+        return first;
+    }
+
+    // 返回 可以插入 value 的第一个位置
+    // 版本2 传入 comp 就不写出了
+    template <typename ForwardIterator, typename T>
+    inline ForwardIterator lower_bound(ForwardIterator first, ForwardIterator last, const T& value) {
+        return __lower_bound(first, last, value, distance_type(first), iterator_category(first));
+    }
+
+
+    template <typename ForwardIterator, typename T, typename Distance>
+    inline ForwardIterator __upper_bound(ForwardIterator first, ForwardIterator last, const T& value, Distance*, forward_iterator_tag) {
+        Distance len = 0;
+        distance(first, last, len);
+        Distance half;
+        ForwardIterator middle;
+        while (len > 0) {
+            half = len >> 1;
+            middle = first;
+            advance(middle, half);
+            if (value < *middle) {
+                len = half;
+            } else {
+                first = middle;
+                ++first;
+                len = len - half - 1;
+            }
+        }
+        return first;
+    }
+
+    template <typename RandomAccessIterator, typename T, typename Distance>
+    RandomAccessIterator __upper_bound(RandomAccessIterator first, RandomAccessIterator last, const T& value, Distance*, random_access_iterator_tag) {
+        Distance len = last - first;
+        Distance half;
+        RandomAccessIterator middle;
+        while (len > 0) {
+            half = len >> 1;
+            middle = first + half;
+            if (value < *middle) {
+                len = half;
+            } else {
+                first = middle;
+                ++first;
+                len = len - half - 1;
+            }
+        }
+        return first;
+    }
+    // 返回 可以插入 value 的 最后一个位置
+    template <typename ForwardIterator, typename T>
+    inline ForwardIterator upper_bound(ForwardIterator first, ForwardIterator last, const T& value) {
+        return __upper_bound(first, last, value, distance_type(first), iterator_category(first));
+    }
 }
 
 #endif //STLTOYS_YY_ALGO_H
