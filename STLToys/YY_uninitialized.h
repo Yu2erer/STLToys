@@ -83,8 +83,7 @@ namespace YY {
 
     template <typename ForwardIterator, typename T>
     inline void __uninitialized_fill_aux(ForwardIterator first, ForwardIterator last, const T& x, __true_type) {
-        // FIXME: 应该使用 fill()
-        std::fill(first, last, x);
+        fill(first, last, x);
     }
 
     template <typename ForwardIterator, typename T>

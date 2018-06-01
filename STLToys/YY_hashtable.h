@@ -13,6 +13,7 @@
 #include "YY_iterator.h"
 #include "YY_vector.h"
 #include "YY_pair.h"
+#include "YY_algo.h"
 
 namespace YY {
 
@@ -89,8 +90,7 @@ namespace YY {
     inline unsigned long __stl_next_prime(unsigned long n) {
         const unsigned long* first = __stl_prime_list;
         const unsigned long* last = __stl_prime_list + __stl_num_primes;
-        // FIXME: lower_bound 未实现
-        const unsigned long* pos = std::lower_bound(first, last, n);
+        const unsigned long* pos = lower_bound(first, last, n);
         return pos == last ? *(last - 1) : *pos;
     }
 

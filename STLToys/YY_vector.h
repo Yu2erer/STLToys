@@ -205,17 +205,15 @@ namespace YY {
                 // 插入点之后的已有元素 > 新增元素个数
                 uninitialized_copy(finish - n, finish, finish);
                 finish += n;
-                // FIXME: 以后将 std::fill() 替换掉
                 copy_backward(position, old_finish - n, old_finish);
-                std::fill(position, position + n, x_copy);
+                fill(position, position + n, x_copy);
             } else {
                 // 插入点之后的已有元素 < 新增元素个数
                 uninitialized_fill_n(finish, n - elems_after, x_copy);
                 finish += n - elems_after;
                 uninitialized_copy(finish - n, old_finish, finish);
                 finish += elems_after;
-                // FIXME: 以后将 std::fill() 替换掉
-                std::fill(position, old_finish, x_copy);
+                fill(position, old_finish, x_copy);
             }
         } else {
             // 备用空间不足 需要额外配置空间

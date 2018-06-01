@@ -264,7 +264,7 @@ namespace YY {
         // 如果刚好整除 会多出一个 节点
         size_type num_nodes = num_elements / buffer_size() + 1;
         // 一个map 至少管理 8 个 节点 最多为 节点数 + 2 前后各多留一个
-        map_size = std::max(initial_map_size(), num_nodes + 2);
+        map_size = max(initial_map_size(), num_nodes + 2);
         map = map_allocator::allocate(map_size);
 
         // 取中间 使得前后扩展能力一样大
@@ -341,7 +341,7 @@ namespace YY {
             }
         } else {
             // 不够了 配置新map
-            size_type new_map_size = map_size + std::max(map_size, nodes_to_add) + 2 + (add_at_front ? nodes_to_add : 0);
+            size_type new_map_size = map_size + max(map_size, nodes_to_add) + 2 + (add_at_front ? nodes_to_add : 0);
             map_pointer new_map = map_allocator::allocate(new_map_size);
             new_nstart = new_map + (new_map_size - new_num_nodes) / 2 + (add_at_front ? nodes_to_add : 0);
             // 将原 map 拷贝过来
